@@ -7,4 +7,4 @@ First stage of the development:
 3. Implement the GUI for the board.
 
 Second stage of the development:
-1. Implement the AI.a
+1. Implement the AI.
