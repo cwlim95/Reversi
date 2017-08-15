@@ -60,15 +60,68 @@ class Board:
             self.checkValid(row,col,self.active_player,"W") or \
             self.checkValid(row,col,self.active_player,"N")
 
-        #following are boundary cases
+        ###following are boundary cases
 
         elif row == 0 and col != 0:
+            # Top row
             return self.checkValid(row,col,self.active_player,"SE") or \
             self.checkValid(row,col,self.active_player,'SW') or \
             self.checkValid(row,col,self.active_player,"E") or \
             self.checkValid(row,col,self.active_player,"S") or \
             self.checkValid(row,col,self.active_player,"W")
 
+        elif row != 0 and col == 0:
+            # Left Column
+            return self.checkValid(row,col,self.active_player,"SE") or \
+            self.checkValid(row,col,self.active_player,"NE") or \
+            self.checkValid(row,col,self.active_player,"E") or \
+            self.checkValid(row,col,self.active_player,"S") or \
+            self.checkValid(row,col,self.active_player,"N")
+
+        elif row == self.board_size - 1 and col != 0:
+            # Bottom Row
+            return self.checkValid(row,col,self.active_player,"NW") or \
+            self.checkValid(row,col,self.active_player,"NE") or \
+            self.checkValid(row,col,self.active_player,"E") or \
+            self.checkValid(row,col,self.active_player,"W") or \
+            self.checkValid(row,col,self.active_player,"N")
+
+        elif row != 0 and col == self.board_size - 1:
+            #Right Column
+            return self.checkValid(row,col,self.active_player,"NW") or \
+            self.checkValid(row,col,self.active_player,"SW") or \
+            self.checkValid(row,col,self.active_player,"S") or \
+            self.checkValid(row,col,self.active_player,"W") or \
+            self.checkValid(row,col,self.active_player,"N")
+
+        ###following are corner points
+
+        elif row == 0 and col == 0:
+            #Top left corner
+            return self.checkValid(row,col,self.active_player,"SE") or \
+            self.checkValid(row,col,self.active_player,"E") or \
+            self.checkValid(row,col,self.active_player,"S")
+
+        elif row == self.board_size - 1 and col == 0:
+            #Bottom Right Corner
+            return self.checkValid(row,col,self.active_player,"NE") or \
+            self.checkValid(row,col,self.active_player,"E") or \
+            self.checkValid(row,col,self.active_player,"N")
+
+        elif row == 0 and col == self.board_size - 1:
+            #Top Right Corner
+            return self.checkValid(row,col,self.active_player,"SW") or \
+            self.checkValid(row,col,self.active_player,"S") or \
+            self.checkValid(row,col,self.active_player,"W")
+
+        elif row == self.board_size - 1 and col == self.board_size - 1:
+            #Bottom Right Corner
+            return self.checkValid(row,col,self.active_player,"NW") or \
+            self.checkValid(row,col,self.active_player,"W") or \
+            self.checkValid(row,col,self.active_player,"N")
+
+        else:
+            return None
 
     def nextPosition(self, row, col, direction):
         '''
