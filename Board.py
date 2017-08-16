@@ -5,18 +5,23 @@ class Board:
 
         # Initialize the starting arrangement of the game
         self.squares[3][3] = 'B'
-        self.squares[4][4] = 'W'
-        self.squares[3][4] = 'B'
-        self.squares[4][3] = 'B'
+        self.squares[4][4] = 'B'
+        self.squares[3][4] = 'W'
+        self.squares[4][3] = 'W'
 
         self.active_player = 'B'  # Black to move first
 
     def print_board(self):
+        # print column count
+        print('  ', end='')
+        for x in range(self.board_size):
+            print(x, end=' ')
+        print('\n', end='')
         for row in range(self.board_size):
-            tmp = []
+            print(row, end=' ')
             for col in range(self.board_size):
-                tmp.append(self.squares[row][col])
-            print(tmp)
+                print(self.squares[row][col], end=' ')
+            print('\n', end='')
 
     def move(self, row, col):
 
@@ -28,15 +33,22 @@ class Board:
             self.squares[row][col] = 'W'
             self.active_player = 'B'
 
+    def all_valid_move(self):
+        # Obtained all the valid moves that can be performed by the active players
+        for row in range(self.board_size):
+            for col in range(self.board_size):
+                if self.valid_move(row, col) is True:
+                    print(row, col)
+
     def valid_move(self, row, col):
         # At least one piece is reversed
         # Check 8 directions
         if row < 0 or row > self.board_size or col < 0 or col > 7:
-            print('Not in boundary.')
+            #print('Not in boundary.')
             return False
 
         if self.squares[row][col] is not '0':
-            print('Existed piece.')
+            #print('Existed piece.')
             return False
 
         # Probably need to take care of boundary cases
@@ -48,9 +60,8 @@ class Board:
                     continue
                 adjacent_pieces.append(self.squares[x][y])
         '''
-
         if row != 0 and col != 0:
-            #abit tedious here, not sure how to simplify
+            # tedious here, not sure how to simplify
             return self.checkValid(row,col,self.active_player,"NW") or \
             self.checkValid(row,col,self.active_player,"SE") or \
             self.checkValid(row,col,self.active_player,"NE") or \
@@ -157,8 +168,7 @@ class Board:
         Suggestion: calling function should identify which checkValid functions to call.
         '''
         curRow, curCol = self.nextPosition(row, col, direction)
-
-        if self.squares[curRow][curCol] == '0' or self.squares[curRow][curCol] == colour:
+        if curRow > 7 or curCol > 7 or self.squares[curRow][curCol] == '0' or self.squares[curRow][curCol] == colour:
             #first encounter cannot be the same colour
             return False
         else:
@@ -167,7 +177,7 @@ class Board:
                 if self.squares[curRow][curCol] == colour:
                     #encounters a similar colour along the way, hence valid move in NW.
                     return True
-                print(curRow, curCol)
+                #print(curRow, curCol)
                 curRow, curCol = self.nextPosition(curRow, curCol, direction)
             return False
 
@@ -175,6 +185,7 @@ class Board:
 if __name__ == "__main__":
     board = Board(8)
     board.print_board()
-    print(board.checkValid(5,5,'B', 'NW'))
-    print(board.checkValid(5,5,'W', 'NW'))
+    board.all_valid_move()
+    #print(board.checkValid(5,5,'B', 'NW'))
+    #print(board.checkValid(4,5,'W', 'N'))
 
