@@ -33,12 +33,15 @@ class Board:
             self.squares[row][col] = 'W'
             self.active_player = 'B'
 
-    def all_valid_move(self):
+    def all_valid_moves(self):
         # Obtained all the valid moves that can be performed by the active players
+        valid_moves = []
         for row in range(self.board_size):
             for col in range(self.board_size):
                 if self.valid_move(row, col) is True:
-                    print(row, col)
+                    valid_moves.append([row, col])
+
+        return valid_moves
 
     def valid_move(self, row, col):
         # At least one piece is reversed
@@ -185,7 +188,7 @@ class Board:
 if __name__ == "__main__":
     board = Board(8)
     board.print_board()
-    board.all_valid_move()
+    print(board.all_valid_moves())
     #print(board.checkValid(5,5,'B', 'NW'))
     #print(board.checkValid(4,5,'W', 'N'))
 
